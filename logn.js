@@ -1,5 +1,6 @@
 /**
  * logn
+ * Demonstration and explanation of recursion in JavaScript
  * Created by dcorns on 11/15/16
  * Copyright © 2016 Dale Corns
  */
@@ -31,7 +32,7 @@ function log2OfNReturnRecursive(n, seed) {
     else
         return log2OfNReturnRecursive(n, seed + 1);
 }
-//On to other issues with recursion in JS. The log function above only correctly returns answers of integer powers of 2 so a nine will return 3 as is the same for 8. It will handle very large numbers but it is not accurate. In order to demonstrate the next issue we need to handle numbers that are not integers as well. The intent will be to cause the stack to overflow and provide a solution. (tail call optimization). I reality, this will not really accurately determine even the integer powers of 2 because of the floating point feature of JS, however it is great for pointing out the issue memory munching recursion since even an input as small as 3 will cause the stack to overflow. Remember a stack for every recursive call until it completes. That can amount to a lot of stacks in the following function.
+//On to other issues with recursion in JS. The log function above only correctly returns answers of integer powers of 2 so a nine will return 3 as is the same for 8. It will handle very large numbers but it is not accurate. In order to demonstrate the next issue we need to handle numbers that are not integers as well. The intent will be to cause the stack to overflow and provide a solution to avoid it. (tail call optimization). In reality, this will not really accurately determine log2 even for integer powers of 2 because of the floating point feature of JS, however it is great for pointing out the issue of memory munching using recursion since even an input as small as 3 will cause the stack to overflow. Remember a stack for every recursive call until it completes. That can amount to a lot of stacks in the following function.
 function log2(n, seed) {
     console.log(`2 ** seed: ${Math.pow(2, seed)}, n: ${n}, seed: ${seed}`);
     if (Math.pow(2, seed) < n)
@@ -39,7 +40,7 @@ function log2(n, seed) {
     else
         return seed;
 }
-//The following is how tail call optimization would be written. By wrapping the function in another function we inform a programing language that the function is recursive and it would execute like a loop to save the memory.
+//The following function demonstrates how tail call optimization (TCO) would be written. By wrapping the function in another function we inform a programing language that the function is recursive and it would execute like a loop to save the memory.
 function log2a(a, b) {
     function recursiveLog2(n, seed) {
         console.log(`2 ** seed: ${Math.pow(2, seed)}, n: ${n}, seed: ${seed}`);
@@ -57,5 +58,5 @@ function logLoop(n, seed) {
     }
     return seed;
 }
-//By using this loop we get the result we want quickly for very large numbers without a stack over flow. There are elaborate ways implement tail call optimization (TCO) in JS using patterns like trampolining, but I think it is excessive. All a TCO in a language does is execute the recursion as a loop. We can always use a loop the accomplish the same result as we would with recursion so my advise is to wait until the language supports TCO before widespread us of recursion or use a functional programing library. In the meantime, only use recursion for functions that will not go so deep the stack will overflow.
+//By using this loop we get the result we want quickly for very large numbers without a stack over flow. There are elaborate ways implement tail call optimization (TCO) in JS using patterns like trampolining, but I think it is ordinarily counter productive to do so. All a TCO in a language does is execute the recursion as a loop. We can always use a loop the accomplish the same result as we would with recursion so my advise is to wait until the language supports TCO before widespread us of recursion or use a functional programing library. In the meantime, only use recursion for functions that will not go so deep that the stack will overflow. Better yet, just us a loop instead.
 //# sourceMappingURL=logn.js.map
